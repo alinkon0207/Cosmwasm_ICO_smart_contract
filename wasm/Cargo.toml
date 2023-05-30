@@ -1,0 +1,31 @@
+[package]
+name = "elrond-ico-sc-wasm"
+version = "0.0.0"
+edition = "2018"
+publish = false
+authors = [ "you",]
+
+[lib]
+crate-type = [ "cdylib",]
+
+[workspace]
+members = [ ".",]
+
+[dev-dependencies]
+
+[profile.release]
+codegen-units = 1
+opt-level = "z"
+lto = true
+debug = false
+panic = "abort"
+
+[dependencies.elrond-ico-sc]
+path = ".."
+
+[dependencies.elrond-wasm-node]
+version = "0.27.4"
+
+[dependencies.elrond-wasm-output]
+version = "0.27.4"
+features = [ "wasm-output-mode",]

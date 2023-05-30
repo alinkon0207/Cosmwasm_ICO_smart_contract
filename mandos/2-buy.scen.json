@@ -1,0 +1,110 @@
+{
+    "name": "buy & withdraw",
+    "steps": [
+        {
+            "step": "externalSteps",
+            "path": "1-init.scen.json"
+        },
+        {
+            "step": "setState",
+            "comment": "only set block info this time",
+            "currentBlockInfo": {
+                "blockTimestamp": "511",
+                "blockNonce": "522",
+                "blockRound": "533",
+                "blockEpoch": "544"
+            }
+        },
+        {
+            "step": "scCall",
+            "tx": {
+                "from": "address:owner",
+                "to": "sc:main",
+                "function": "buyTokens",
+                "egldValue": "100,000,000,000,000,000",
+                "gasLimit": "100,000,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "out": [],
+                "status": "0",
+                "message": "",
+                "gas": "*",
+                "refund": "*"
+            }
+        },
+        {
+            "step": "checkState",
+            "accounts": {
+                "address:owner": {
+                    "balance": "900,000,000,000,000,000",
+                    "nonce": "6",
+                    "storage": {},
+                    "esdt": {
+                        "str:EGLD-abcdef": "1000,000,000,000,000,000,000"
+                    }
+                },
+                "sc:main": {
+                    "nonce": "0",
+                    "balance": "100,000,000,000,000,000",
+                    "code": "file:../output/elrond-ico-sc.wasm",
+                    "storage": {
+                        "str:token_id": "str:EGLD-abcdef",
+                        "str:activation_timestamp": "1",
+                        "str:duration_timestamp": "100,000",
+                        "str:token_price": "100,000,000,000,000"
+                    },
+                    "esdt": {
+                        "str:EGLD-abcdef": "999,000,000,000,000,000,000,000"
+                    }
+                },
+                "+": {}
+            }
+        },
+        {
+            "step": "scCall",
+            "tx": {
+                "from": "address:owner",
+                "to": "sc:main",
+                "function": "withdraw",
+                "gasLimit": "100,000,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "out": [],
+                "status": "0",
+                "message": "",
+                "gas": "*",
+                "refund": "*"
+            }
+        },
+        {
+            "step": "checkState",
+            "accounts": {
+                "address:owner": {
+                    "balance": "1,000,000,000,000,000,000",
+                    "nonce": "7",
+                    "storage": {},
+                    "esdt": {
+                        "str:EGLD-abcdef": "1000,000,000,000,000,000,000"
+                    }
+                },
+                "sc:main": {
+                    "nonce": "0",
+                    "balance": "0",
+                    "code": "file:../output/elrond-ico-sc.wasm",
+                    "storage": {
+                        "str:token_id": "str:EGLD-abcdef",
+                        "str:activation_timestamp": "1",
+                        "str:duration_timestamp": "100,000",
+                        "str:token_price": "100,000,000,000,000"
+                    },
+                    "esdt": {
+                        "str:EGLD-abcdef": "999,000,000,000,000,000,000,000"
+                    }
+                },
+                "+": {}
+            }
+        }
+    ]
+}

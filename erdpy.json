@@ -1,0 +1,21 @@
+{
+    "configurations": {
+        "default": {
+            "proxy": "https://testnet-api.elrond.com",
+            "chainID": "T"
+        }
+    },
+    "contract":{
+        "deploy":{
+            "verbose": true,
+            "bytecode": "output/elrond-ico-sc.wasm",
+            "recall-nonce": true,
+            "pem": "./wallets/testnet-wallet.pem",
+            "gas-limit": 59999999,
+            "send": true,
+            "outfile": "deploy-testnet.interaction.json",
+            "metadata-payable": true,
+            "metadata-payable-by-sc": true
+        }
+     }
+}
